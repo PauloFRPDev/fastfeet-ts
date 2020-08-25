@@ -6,6 +6,7 @@ import EnsureAuthenticated from '../middlewares/EnsureAuthenticated';
 import Recipient from '../models/Recipient';
 import CreateRecipientService from '../services/CreateRecipientService';
 import UpdateRecipientService from '../services/UpdateRecipientService';
+import DeleteRecipientService from '../services/DeleteRecipientService';
 
 const recipientsRouter = Router();
 
@@ -65,6 +66,16 @@ recipientsRouter.put('/:recipientId', async (request, response) => {
   });
 
   response.json(recipient);
+});
+
+recipientsRouter.delete('/:recipientId', async (request, response) => {
+  const { recipientId } = request.params;
+
+  const deleteRecipient = new DeleteRecipientService();
+
+  await deleteRecipient.execute({ recipient_id: Number(recipientId) });
+
+  return response.status(201).json();
 });
 
 export default recipientsRouter;
