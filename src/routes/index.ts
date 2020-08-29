@@ -5,6 +5,7 @@ import sessionsRouter from './sessions.routes';
 
 import recipientsRouter from './recipients.routes';
 import deliverymenRouter from './deliverymen.routes';
+import deliveriesRouter from './deliveries.routes';
 
 const routes = Router();
 
@@ -13,5 +14,6 @@ routes.use('/sessions', sessionsRouter);
 
 routes.use('/recipients', recipientsRouter);
 routes.use('/deliverymen', deliverymenRouter);
+routes.use('/deliveries', deliveriesRouter);
 
 export default routes;

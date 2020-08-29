@@ -5,15 +5,18 @@ import {
   UpdateDateColumn,
   PrimaryGeneratedColumn,
   BaseEntity,
+  OneToMany,
 } from 'typeorm';
 import { Expose } from 'class-transformer';
 
 import uploadConfig from '../config/upload';
 
+import Delivery from './Delivery';
+
 @Entity('deliverymen')
 class Deliveryman extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column()
   name: string;
@@ -29,6 +32,9 @@ class Deliveryman extends BaseEntity {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => Delivery, delivery => delivery.deliveryman)
+  delivery: Delivery[];
 
   @Expose({ name: 'avatar_url' })
   getAvatarUrl(): string | null {

@@ -5,15 +5,15 @@ import {
   UpdateDateColumn,
   PrimaryGeneratedColumn,
   BaseEntity,
+  OneToMany,
 } from 'typeorm';
+
+import Delivery from './Delivery';
 
 @Entity('recipients')
 class Recipient extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: string;
-
-  @Column()
-  name: string;
+  id: number;
 
   @Column()
   street: string;
@@ -38,6 +38,9 @@ class Recipient extends BaseEntity {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => Delivery, delivery => delivery.recipient)
+  delivery: Delivery[];
 }
 
 export default Recipient;
