@@ -7,6 +7,7 @@ import {
   BaseEntity,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { Expose } from 'class-transformer';
 
@@ -14,6 +15,7 @@ import uploadConfig from '../config/upload';
 
 import Recipient from './Recipient';
 import Deliveryman from './Deliveryman';
+import Problem from './Problem';
 
 @Entity('deliveries')
 class Delivery extends BaseEntity {
@@ -54,6 +56,9 @@ class Delivery extends BaseEntity {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => Problem, problem => problem.delivery)
+  problem: Problem[];
 
   @Expose({ name: 'signature_url' })
   getSignatureUrl(): string | null {

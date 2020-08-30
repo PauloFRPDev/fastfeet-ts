@@ -1,4 +1,9 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
 export default class CreateDeliveriesTable1598741578191
   implements MigrationInterface {
@@ -58,9 +63,37 @@ export default class CreateDeliveriesTable1598741578191
         ],
       }),
     );
+
+    await queryRunner.createForeignKey(
+      'deliveries',
+      new TableForeignKey({
+        name: 'DeliveryRecipient',
+        columnNames: ['recipient_id'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'recipients',
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+      }),
+    );
+
+    await queryRunner.createForeignKey(
+      'deliveries',
+      new TableForeignKey({
+        name: 'DeliveryDeliveryman',
+        columnNames: ['deliveryman_id'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'deliverymen',
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+      }),
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropForeignKey('deliveries', 'DeliveryRecipient');
+
+    await queryRunner.dropForeignKey('deliveries', 'DeliveryDeliveryman');
+
     await queryRunner.dropTable('deliveries');
   }
 }
