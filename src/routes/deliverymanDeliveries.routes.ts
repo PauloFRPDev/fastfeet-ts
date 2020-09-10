@@ -1,14 +1,20 @@
 import { Router } from 'express';
 import { Not } from 'typeorm';
+import multer from 'multer';
+import { classToClass } from 'class-transformer';
 
 import AppError from '../errors/AppError';
+import uploadConfig from '../config/upload';
 
 import Deliveryman from '../models/Deliveryman';
 import Delivery from '../models/Delivery';
 import StartDeliveryService from '../services/StartDeliveryService';
 import EndDeliveryService from '../services/EndDeliveryService';
+import UpdateDeliverySignatureService from '../services/UpdateDeliverySignatureService';
 
 const deliverymanDeliveriesRouter = Router();
+
+const upload = multer(uploadConfig.multer);
 
 /* List all deliveries of a deliveryman, already delivered or not */
 deliverymanDeliveriesRouter.get(
@@ -74,6 +80,25 @@ deliverymanDeliveriesRouter.patch(
     });
 
     return response.json(delivery);
+  },
+);
+
+/* Update signature of a delivery */
+deliverymanDeliveriesRouter.patch(
+  '/:deliverymanId/delivery/:deliveryId/update_signature',
+  upload.single('signature'),
+  async (request, response) => {
+    const { deliverymanId, deliveryId } = request.params;
+
+    const updateDeliverySignature = new UpdateDeliverySignatureService();
+
+    const delivery = await updateDeliverySignature.execute({
+      deliveryman_id: Number(deliverymanId),
+      delivery_id: Number(deliveryId),
+      signatureFilename: request.file.filename,
+    });
+
+    return response.json(classToClass(delivery));
   },
 );
 
