@@ -16,6 +16,9 @@ class Recipient extends BaseEntity {
   id: number;
 
   @Column()
+  name: string;
+
+  @Column()
   street: string;
 
   @Column()
