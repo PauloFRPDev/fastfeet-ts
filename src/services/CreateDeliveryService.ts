@@ -15,13 +15,13 @@ export default class CreateDeliveryService {
     deliveryman_id,
     product,
   }: RequestData): Promise<Delivery> {
-    const recipientExists = Recipient.findOne(recipient_id);
+    const recipientExists = await Recipient.findOne(recipient_id);
 
     if (!recipientExists) {
       throw new AppError('Recipient not found');
     }
 
-    const deliverymanExists = Recipient.findOne(deliveryman_id);
+    const deliverymanExists = await Recipient.findOne(deliveryman_id);
 
     if (!deliverymanExists) {
       throw new AppError('Deliveryman not found');

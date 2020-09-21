@@ -12,6 +12,7 @@ const recipientsRouter = Router();
 
 recipientsRouter.use(EnsureAuthenticated);
 
+/* Show recipient */
 recipientsRouter.get('/:recipientId', async (request, response) => {
   const { recipientId } = request.params;
 
@@ -24,12 +25,14 @@ recipientsRouter.get('/:recipientId', async (request, response) => {
   return response.json(recipient);
 });
 
+/* List recipients */
 recipientsRouter.get('/', async (request, response) => {
   const recipients = await Recipient.find();
 
   return response.json(recipients);
 });
 
+/* Create recipient */
 recipientsRouter.post('/', async (request, response) => {
   const { name, street, number, complement, state, city, cep } = request.body;
 
@@ -48,6 +51,7 @@ recipientsRouter.post('/', async (request, response) => {
   response.json(recipient);
 });
 
+/* Update recipient */
 recipientsRouter.put('/:recipientId', async (request, response) => {
   const { recipientId } = request.params;
   const { name, street, number, complement, state, city, cep } = request.body;
@@ -68,6 +72,7 @@ recipientsRouter.put('/:recipientId', async (request, response) => {
   response.json(recipient);
 });
 
+/* Delete recipient */
 recipientsRouter.delete('/:recipientId', async (request, response) => {
   const { recipientId } = request.params;
 

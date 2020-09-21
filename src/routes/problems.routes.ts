@@ -8,6 +8,7 @@ import DeleteDeliveryByProblemService from '../services/DeleteDeliveryByProblemS
 
 const problemsRouter = Router();
 
+/* List problems of a specific delivery */
 problemsRouter.get(
   '/delivery/:deliveryId/problems',
   async (request, response) => {
@@ -21,6 +22,7 @@ problemsRouter.get(
   },
 );
 
+/* Create problem to a delivery */
 problemsRouter.post(
   '/delivery/:deliveryId/problems',
   async (request, response) => {
@@ -40,6 +42,7 @@ problemsRouter.post(
 
 problemsRouter.use(EnsureAuthenticated);
 
+/* Cancel delivery with a problem */
 problemsRouter.delete(
   '/problem/:problemId/cancel-delivery',
   async (request, response) => {

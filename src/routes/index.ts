@@ -14,10 +14,10 @@ const routes = Router();
 routes.use('/users', usersRouter);
 routes.use('/sessions', sessionsRouter);
 
+routes.use('/deliveryman', deliverymanDeliveriesRouter);
 routes.use('/recipients', recipientsRouter);
 routes.use('/deliverymen', deliverymenRouter);
 routes.use('/', problemsRouter);
 routes.use('/deliveries', deliveriesRouter);
-routes.use('/deliveryman', deliverymanDeliveriesRouter);
 
 export default routes;
